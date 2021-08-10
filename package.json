@@ -1,0 +1,17 @@
+{
+  "name": "jude-tg-bot",
+  "version": "1.0.0",
+  "description": "work for tg bot jude",
+  "main": "index.js",
+  "repository": "https://github.com/ShinningFinger/jude-tg-bot.git",
+  "author": "xzthemeofsss@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.54.0"
+  },
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.51.4",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  }
+}
