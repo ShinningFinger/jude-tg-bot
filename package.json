@@ -6,9 +6,9 @@
   "repository": "https://github.com/ShinningFinger/jude-tg-bot.git",
   "author": "xzthemeofsss@gmail.com",
   "license": "MIT",
-  "scripts":{
-    "start":"node index.js",
-    "build":"tsc"
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc"
   },
   "dependencies": {
     "node-telegram-bot-api": "^0.54.0"
