@@ -1,5 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api'
-import { saveUrl } from './request'
+import { saveMemo, saveUrl } from './request'
 
 const TOKEN = process.env.TELEGRAM_TOKEN || ''
 const port = parseInt(process.env.PORT || '443', 10)
@@ -28,12 +28,16 @@ bot.setWebHook(`${url}/bot${TOKEN}`)
 bot.on('message', async function onMessage(msg) {
   console.log('msg :>>%j ', msg)
   if (msg.caption_entities) {
-    const [entity] = msg.caption_entities
-    if (entity.type === 'text_link' || entity.type === 'url') {
-      const title = msg.caption
-      const { url } = entity
-      await saveUrl({ content: url!, title })
-    }
+    await Promise.all(
+      msg.caption_entities.map(async (entity) => {
+        if (entity.type === 'text_link' || entity.type === 'url') {
+          const title = msg.caption
+          const { url } = entity
+          await saveUrl({ content: url!, title })
+          bot.sendMessage(msg.chat.id, '链接保存成功啦')
+        }
+      }),
+    )
   }
   if (msg.entities) {
     await Promise.all(
@@ -42,10 +46,13 @@ bot.on('message', async function onMessage(msg) {
           const title = msg.text
           const { url } = entity
           await saveUrl({ content: url!, title })
+          bot.sendMessage(msg.chat.id, '链接保存成功啦')
         }
       }),
     )
   }
-
-  bot.sendMessage(msg.chat.id, msg.text || '你说啥')
+  if (msg.text) {
+    await saveMemo({ content: msg.text })
+    bot.sendMessage(msg.chat.id, '速记保存成功啦')
+  }
 })
