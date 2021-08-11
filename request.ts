@@ -13,7 +13,8 @@ async function saveUrl(body: {
   description?: string
   tags?: string
 }) {
-  await client.post('', { json: { ...body, type: 'url', folder: 'Telegram 收藏' } })
+  const res = await client.post('', { json: { ...body, type: 'url', folder: 'Telegram 收藏' } })
+  console.log('res :>> ', res)
 }
 async function saveMemo(body: {
   content: string
