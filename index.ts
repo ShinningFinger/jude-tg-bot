@@ -1,4 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api'
+import { saveUrl } from './request'
 
 const TOKEN = process.env.TELEGRAM_TOKEN || ''
 const port = parseInt(process.env.PORT || '443', 10)
@@ -24,7 +25,14 @@ const bot = new TelegramBot(TOKEN, options)
 bot.setWebHook(`${url}/bot${TOKEN}`)
 
 // Just to ping!
-bot.on('message', function onMessage(msg) {
-  console.log('msg:%j', msg)
+bot.on('message', async function onMessage(msg) {
+  if (msg.caption_entities) {
+    const [entity] = msg.caption_entities
+    if (entity.type === 'text_link' || entity.type === 'url') {
+      const title = msg.caption
+      const { url } = entity
+      await saveUrl({ content: url!, title })
+    }
+  }
   bot.sendMessage(msg.chat.id, msg.text || '你说啥')
 })
