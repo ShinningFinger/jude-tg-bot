@@ -14,16 +14,9 @@ async function saveUrl(body: {
   tags?: string
 }) {
   const res = await client.post('', { json: { ...body, type: 'url', folder: 'Telegram 收藏' } })
-  console.log('res :>> ', res)
 }
-async function saveMemo(body: {
-  content: string
-  title?: string
-  description?: string
-  tags?: string
-  folder?: string
-}) {
-  await client.post('', { json: { ...body, type: 'memo', folder: 'Telegram 收藏' } })
+async function saveMemo(body: { content: string; title?: String }) {
+  await client.post('', { json: { ...body, type: 'memo' } })
 }
 
 export { saveUrl, saveMemo }

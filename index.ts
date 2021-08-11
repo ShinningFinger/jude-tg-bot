@@ -26,6 +26,7 @@ bot.setWebHook(`${url}/bot${TOKEN}`)
 
 // Just to ping!
 bot.on('message', async function onMessage(msg) {
+  console.log('msg :>>%j ', msg)
   if (msg.caption_entities) {
     const [entity] = msg.caption_entities
     if (entity.type === 'text_link' || entity.type === 'url') {
@@ -42,5 +43,6 @@ bot.on('message', async function onMessage(msg) {
       await saveUrl({ content: url!, title })
     }
   }
+
   bot.sendMessage(msg.chat.id, msg.text || '你说啥')
 })
