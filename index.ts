@@ -36,12 +36,15 @@ bot.on('message', async function onMessage(msg) {
     }
   }
   if (msg.entities) {
-    const [entity] = msg.entities
-    if (entity.type === 'text_link' || entity.type === 'url') {
-      const title = msg.text
-      const { url } = entity
-      await saveUrl({ content: url!, title })
-    }
+    await Promise.all(
+      msg.entities.map(async (entity) => {
+        if (entity.type === 'text_link' || entity.type === 'url') {
+          const title = msg.text
+          const { url } = entity
+          await saveUrl({ content: url!, title })
+        }
+      }),
+    )
   }
 
   bot.sendMessage(msg.chat.id, msg.text || '你说啥')
