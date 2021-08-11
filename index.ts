@@ -25,5 +25,6 @@ bot.setWebHook(`${url}/bot${TOKEN}`)
 
 // Just to ping!
 bot.on('message', function onMessage(msg) {
+  console.log('msg:%j', msg)
   bot.sendMessage(msg.chat.id, msg.text || '你说啥')
 })
