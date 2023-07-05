@@ -1,8 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "./src",
+    "outDir": "public",
     "module": "commonjs",
     "sourceMap": true,
     "declaration": false,
